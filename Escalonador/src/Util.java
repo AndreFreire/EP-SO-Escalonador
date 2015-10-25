@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Collections;
 
 public class Util {
+	public static String quantum;
 	public static LinkedList<Process> readProcess(){
 		LinkedList<Process> process = new LinkedList<Process>();		
 		try { 
@@ -41,10 +43,23 @@ public class Util {
 			BufferedReader readQuantum = new BufferedReader(quantumFile);
 			String line = readQuantum.readLine();
 			quantumFile.close(); 
+			Util.quantum = line;
 			return Integer.parseInt(line);
 		} catch (IOException e) { 
 			System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage()); 
 			return -1;
+		}
+	}
+	
+	public static void writeLog(String content){
+		try{
+		    String filename= "processos/log" + Util.quantum + ".txt";
+		    FileWriter fw = new FileWriter(filename,true);
+		    fw.write(content + "\n");
+		    fw.close();
+		}
+		catch(IOException ioe){
+		    System.err.println("IOException: " + ioe.getMessage());
 		}
 	}
 }

@@ -9,6 +9,7 @@ public class Process implements Comparable<Process>{
 	String X;
 	String Y;
 	
+	
 	public Process(String name, int priority, LinkedList<String> commands, int credit) {
 		super();
 		this.name = name;
@@ -17,7 +18,7 @@ public class Process implements Comparable<Process>{
 		this.credit = credit;
 		this.X = "";
 		this.Y = "";
-		System.out.println("Carregando " + name);				
+		Util.writeLog("Carregando " + name);				
 	}
 	
 	public String getName() {

@@ -7,8 +7,8 @@ public class BCP {
 	Process executing;
 	int quantum;
 	public BCP() {
-		this.ready = Util.readProcess();
 		this.quantum = Util.readQuantum();
+		this.ready = Util.readProcess();
 		blocked = new LinkedList<Process>();
 	}
 	public void executeProcesses(){
@@ -22,7 +22,7 @@ public class BCP {
 			finish = false;
 			if(this.ready.size() > 0){
 				this.executing = ready.removeFirst();
-				System.out.println("Executando " + this.executing.getName());
+				Util.writeLog("Executando " + this.executing.getName());
 				for(count = 1; count <= this.quantum; count++){
 					command = this.executing.commands.removeFirst();
 					if(command.indexOf("X=") > -1){
@@ -63,13 +63,13 @@ public class BCP {
 	}
 	private void finishProcess(int count) {
 		decrementBlocked();
-		System.out.println("Interrompendo " + this.executing.getName() + " após " + count + " instruções");
-		System.out.println(this.executing.getName() + " terminado. X=" + this.executing.getX() + ". Y=" + this.executing.getY());
+		Util.writeLog("Interrompendo " + this.executing.getName() + " após " + count + " instruções");
+		Util.writeLog(this.executing.getName() + " terminado. X=" + this.executing.getX() + ". Y=" + this.executing.getY());
 	}
 	private void interruptProcess(int count) {
 		decrementCredit();
 		decrementBlocked();
-		System.out.println("Interrompendo " + this.executing.getName() + " após " + count + " instruções");	
+		Util.writeLog("Interrompendo " + this.executing.getName() + " após " + count + " instruções");	
 	}
 	private void decrementBlocked() {
 		LinkedList<Process> copy = new LinkedList<Process>(this.blocked);
@@ -83,7 +83,7 @@ public class BCP {
 		this.blocked = copy;
 	}
 	public void blockProcess(int count){
-		System.out.println("E/S iniciada em " + this.executing.getName());
+		Util.writeLog("E/S iniciada em " + this.executing.getName());
 		interruptProcess(count);
 		this.executing.setBlockedTime(2);
 		this.blocked.add(this.executing);
